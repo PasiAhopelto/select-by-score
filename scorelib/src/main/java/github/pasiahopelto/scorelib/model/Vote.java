@@ -1,10 +1,14 @@
 package github.pasiahopelto.scorelib.model;
 
+import java.io.Serializable;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-public class Vote {
+public class Vote implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
 	private String votingName;
 	private String candidateName;
 	private String optionName;

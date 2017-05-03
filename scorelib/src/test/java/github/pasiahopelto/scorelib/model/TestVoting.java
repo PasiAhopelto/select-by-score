@@ -1,5 +1,9 @@
 package github.pasiahopelto.scorelib.model;
 
+import static org.junit.Assert.assertTrue;
+
+import java.io.Serializable;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.meanbean.test.BeanTester;
@@ -16,5 +20,10 @@ public class TestVoting {
 		new EqualsMethodTester().testEqualsMethod(Voting.class);
 		new HashCodeMethodTester().testHashCodeMethod(Voting.class);
 	}
-	
+
+	@Test
+	public void isSerializable() {
+		assertTrue(new Voting() instanceof Serializable);
+	}
+
 }
