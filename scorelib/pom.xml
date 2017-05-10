@@ -21,10 +21,10 @@
 			<version>21.0</version>
 		</dependency>
 		<dependency>
-    		<groupId>org.apache.commons</groupId>
-    		<artifactId>commons-lang3</artifactId>
-    		<version>3.5</version>
-		</dependency>
+ 	   		<groupId>org.apache.commons</groupId>
+    			<artifactId>commons-lang3</artifactId>
+	    		<version>3.5</version>
+			</dependency>
 		<dependency>
 			<groupId>org.meanbean</groupId>
 			<artifactId>meanbean</artifactId>
@@ -35,7 +35,7 @@
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
 			<version>1.10.19</version>
-			<score>test</score>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
