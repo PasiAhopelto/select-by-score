@@ -12,6 +12,7 @@ public class Voting implements Serializable {
 
 	public enum Scoring { EXACT, DISTANCE };
 	
+	private Integer id;
 	private String name;
 	private String description;
 	private Scoring scoring;
@@ -41,9 +42,17 @@ public class Voting implements Serializable {
 		this.options = options;
 	}
 
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().append(name).append(description).append(options).append(scoring).toHashCode();
+		return new HashCodeBuilder().append(name).append(description).append(options).append(scoring).append(id).toHashCode();
 	}
 
 	@Override
@@ -51,7 +60,7 @@ public class Voting implements Serializable {
 		boolean result = false;
 		if(obj instanceof Voting) {
 			Voting other = (Voting) obj;
-			result = new EqualsBuilder().append(other.description, description).append(other.name, name).append(other.options, options).append(other.scoring, scoring).isEquals();
+			result = new EqualsBuilder().append(other.description, description).append(other.name, name).append(other.options, options).append(other.scoring, scoring).append(other.id, id).isEquals();
 		}
 		return result;
 	}
