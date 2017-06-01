@@ -11,6 +11,14 @@ public class EntityJoiner {
 
 	public void populateWithIds(List<Party> parties, List<Vote> votes, List<Voting> votings) {
 		addPartyIds(parties);
+		addVotingIds(votings);
+	}
+
+	private void addVotingIds(List<Voting> votings) {
+		int votingId = 1;
+		for(Voting voting : votings) {
+			voting.setId(votingId++);
+		}
 	}
 
 	private void addPartyIds(List<Party> parties) {

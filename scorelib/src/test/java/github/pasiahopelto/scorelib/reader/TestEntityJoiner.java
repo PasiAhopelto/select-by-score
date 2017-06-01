@@ -45,6 +45,17 @@ public class TestEntityJoiner {
 		assertEquals(Integer.valueOf(1), PARTIES.get(0).getId());
 	}
 
+	@Test
+	public void populatesVotingWithId() {
+		specifyHasVoting();
+		joiner.populateWithIds(PARTIES, VOTES, VOTINGS);
+		assertEquals(Integer.valueOf(1), VOTINGS.get(0).getId());
+	}
+
+	private void specifyHasVoting() {
+		VOTINGS.add(new Voting());
+	}
+
 	private void specifyPartyHasCandidate() {
 		PARTIES.get(0).getCandidates().add(new Candidate());
 	}
