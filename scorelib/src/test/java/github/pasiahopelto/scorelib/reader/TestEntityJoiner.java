@@ -10,6 +10,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import com.google.common.collect.Lists;
 
 import github.pasiahopelto.scorelib.model.Candidate;
+import github.pasiahopelto.scorelib.model.Election;
 import github.pasiahopelto.scorelib.model.Party;
 import github.pasiahopelto.scorelib.model.Vote;
 import github.pasiahopelto.scorelib.model.Voting;
@@ -50,6 +51,14 @@ public class TestEntityJoiner {
 		specifyHasVoting();
 		joiner.populateWithIds(PARTIES, VOTES, VOTINGS);
 		assertEquals(Integer.valueOf(1), VOTINGS.get(0).getId());
+	}
+
+	@Test
+	public void createsElection() {
+		Election election = joiner.populateWithIds(PARTIES, VOTES, VOTINGS);
+		assertSame(PARTIES, election.getParties());
+		assertSame(VOTES, election.getVotes());
+		assertSame(VOTINGS, election.getVotings());
 	}
 
 	private void specifyHasVoting() {
