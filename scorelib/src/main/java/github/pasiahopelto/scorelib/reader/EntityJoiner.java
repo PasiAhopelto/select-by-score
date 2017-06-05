@@ -11,8 +11,8 @@ import github.pasiahopelto.scorelib.model.Voting;
 public class EntityJoiner {
 
 	public Election populateWithIds(List<Party> parties, List<Vote> votes, List<Voting> votings) {
-		addPartyIds(parties);
-		addVotingIds(votings);
+		generatePartyIds(parties);
+		generateVotingIds(votings);
 		return makeElection(parties, votes, votings);
 	}
 
@@ -24,14 +24,14 @@ public class EntityJoiner {
 		return election;
 	}
 
-	private void addVotingIds(List<Voting> votings) {
+	private void generateVotingIds(List<Voting> votings) {
 		int votingId = 1;
 		for(Voting voting : votings) {
 			voting.setId(votingId++);
 		}
 	}
 
-	private void addPartyIds(List<Party> parties) {
+	private void generatePartyIds(List<Party> parties) {
 		int partyId = 1;
 		int candidateId = 1;
 		for(Party party : parties) {
