@@ -1,6 +1,9 @@
 package github.pasiahopelto.scorelib.reader;
 
 import java.util.List;
+import java.util.Map;
+
+import com.google.common.collect.Maps;
 
 import github.pasiahopelto.scorelib.model.Candidate;
 import github.pasiahopelto.scorelib.model.Election;
@@ -13,7 +16,18 @@ public class EntityJoiner {
 	public Election populateWithIds(List<Party> parties, List<Vote> votes, List<Voting> votings) {
 		generatePartyIds(parties);
 		generateVotingIds(votings);
+		populateWithVotings(votes, votings);
 		return makeElection(parties, votes, votings);
+	}
+
+	private void populateWithVotings(List<Vote> votes, List<Voting> votings) {
+		Map<String, Voting> votingsByName = Maps.newHashMap();
+		for(Voting voting : votings) {
+			votingsByName.put(voting.getName(), voting);
+		}
+		for(Vote vote : votes) {
+			vote.setVoting(votingsByName.get(vote.getVotingName()));
+		}
 	}
 
 	private Election makeElection(List<Party> parties, List<Vote> votes, List<Voting> votings) {

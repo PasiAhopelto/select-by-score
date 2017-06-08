@@ -23,6 +23,7 @@ public class TestEntityJoiner {
 	private static final List<Party> PARTIES = Lists.newArrayList();
 	private static final List<Vote> VOTES = Lists.newArrayList();
 	private static final List<Voting> VOTINGS = Lists.newArrayList();
+	private static final String VOTING_NAME = null;
 
 	private EntityJoiner joiner = new EntityJoiner();
 
@@ -61,8 +62,24 @@ public class TestEntityJoiner {
 		assertSame(VOTINGS, election.getVotings());
 	}
 
+	@Test
+	public void setsVotingOfVote() {
+		specifyHasVoting();
+		specifyHasVote();
+		joiner.populateWithIds(PARTIES, VOTES, VOTINGS);
+		assertEquals(VOTINGS.get(0), VOTES.get(0).getVoting());
+	}
+
+	private void specifyHasVote() {
+		Vote vote = new Vote();
+		vote.setVotingName(VOTING_NAME);
+		VOTES.add(vote);
+	}
+
 	private void specifyHasVoting() {
-		VOTINGS.add(new Voting());
+		Voting voting = new Voting();
+		voting.setName(VOTING_NAME);
+		VOTINGS.add(voting);
 	}
 
 	private void specifyPartyHasCandidate() {
