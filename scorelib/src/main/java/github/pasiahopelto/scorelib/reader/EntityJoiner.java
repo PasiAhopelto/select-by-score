@@ -17,7 +17,20 @@ public class EntityJoiner {
 		generatePartyIds(parties);
 		generateVotingIds(votings);
 		populateWithVotings(votes, votings);
+		populateWithCandidates(votes, parties);
 		return makeElection(parties, votes, votings);
+	}
+
+	private void populateWithCandidates(List<Vote> votes, List<Party> parties) {
+		Map<String, Candidate> candidatesByName = Maps.newHashMap();
+		for(Party party : parties) {
+			for(Candidate candidate : party.getCandidates()) {
+				candidatesByName.put(candidate.getName(), candidate);
+			}
+		}
+		for(Vote vote : votes) {
+			vote.setCandidate(candidatesByName.get(vote.getCandidateName()));
+		}
 	}
 
 	private void populateWithVotings(List<Vote> votes, List<Voting> votings) {
