@@ -13,7 +13,15 @@ import github.pasiahopelto.scorelib.model.Voting;
 
 public class EntityJoiner {
 
-	public Election populateWithIds(List<Party> parties, List<Vote> votes, List<Voting> votings) {
+	public class IntegrityException extends Exception {
+		private static final long serialVersionUID = 1L;
+
+		public IntegrityException(String entityName, String duplicatedName) {
+			super("Duplicated " + entityName + ": " + duplicatedName);
+		}
+	};
+	
+	public Election populateWithIds(List<Party> parties, List<Vote> votes, List<Voting> votings) throws IntegrityException {
 		generatePartyIds(parties);
 		generateVotingIds(votings);
 		populateWithVotings(votes, votings);
@@ -21,10 +29,11 @@ public class EntityJoiner {
 		return makeElection(parties, votes, votings);
 	}
 
-	private void populateWithCandidates(List<Vote> votes, List<Party> parties) {
+	private void populateWithCandidates(List<Vote> votes, List<Party> parties) throws IntegrityException {
 		Map<String, Candidate> candidatesByName = Maps.newHashMap();
 		for(Party party : parties) {
 			for(Candidate candidate : party.getCandidates()) {
+				assertNotDuplicate(candidatesByName, candidate.getName(), "candidate");
 				candidatesByName.put(candidate.getName(), candidate);
 			}
 		}
@@ -33,13 +42,20 @@ public class EntityJoiner {
 		}
 	}
 
-	private void populateWithVotings(List<Vote> votes, List<Voting> votings) {
+	private void populateWithVotings(List<Vote> votes, List<Voting> votings) throws IntegrityException {
 		Map<String, Voting> votingsByName = Maps.newHashMap();
 		for(Voting voting : votings) {
+			assertNotDuplicate(votingsByName, voting.getName(), "voting");
 			votingsByName.put(voting.getName(), voting);
 		}
 		for(Vote vote : votes) {
 			vote.setVoting(votingsByName.get(vote.getVotingName()));
+		}
+	}
+
+	private void assertNotDuplicate(Map<String, ?> votingsByName, String name, String entityName) throws IntegrityException {
+		if(votingsByName.containsKey(name)) {
+			throw new IntegrityException(entityName, "Entity " + name + " duplicated");
 		}
 	}
 
