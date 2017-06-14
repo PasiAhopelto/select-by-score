@@ -16,8 +16,8 @@ public class EntityJoiner {
 	public class IntegrityException extends Exception {
 		private static final long serialVersionUID = 1L;
 
-		public IntegrityException(String entityName, String duplicatedName) {
-			super("Duplicated " + entityName + ": " + duplicatedName);
+		public IntegrityException(String entityName, String message) {
+			super(entityName + ": " + message);
 		}
 	};
 	
@@ -38,7 +38,7 @@ public class EntityJoiner {
 			}
 		}
 		for(Vote vote : votes) {
-			vote.setCandidate(candidatesByName.get(vote.getCandidateName()));
+			vote.setCandidate(getAndAssertCandidate(candidatesByName, vote));
 		}
 	}
 
@@ -49,13 +49,29 @@ public class EntityJoiner {
 			votingsByName.put(voting.getName(), voting);
 		}
 		for(Vote vote : votes) {
-			vote.setVoting(votingsByName.get(vote.getVotingName()));
+			vote.setVoting(getAndAssertVoting(votingsByName, vote));
 		}
+	}
+
+	private Candidate getAndAssertCandidate(Map<String, Candidate> candidatesByName, Vote vote) throws IntegrityException {
+		Candidate candidate = candidatesByName.get(vote.getCandidateName());
+		if(candidate == null) {
+			throw new IntegrityException("vote", "unknown candidateName " + vote.getCandidateName());
+		}
+		return candidate;
+	}
+
+	private Voting getAndAssertVoting(Map<String, Voting> votingsByName, Vote vote) throws IntegrityException {
+		Voting voting = votingsByName.get(vote.getVotingName());
+		if(voting == null) {
+			throw new IntegrityException("vote", "unknown voting " + vote.getVotingName());
+		}
+		return voting;
 	}
 
 	private void assertNotDuplicate(Map<String, ?> votingsByName, String name, String entityName) throws IntegrityException {
 		if(votingsByName.containsKey(name)) {
-			throw new IntegrityException(entityName, "Entity " + name + " duplicated");
+			throw new IntegrityException(entityName, name + " duplicated");
 		}
 	}
 
