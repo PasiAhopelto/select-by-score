@@ -22,8 +22,9 @@ public class TestDbMaker {
 
 	@Test
 	public void returnsDataSourceThatHasConnection() throws SQLException {
-		DataSource createDatabase = dbMaker.createDatabase();
-		Connection connection = createDatabase.getConnection();
+		JdbcTemplate jdbcTemplate = dbMaker.createDatabase();
+		DataSource dataSource = jdbcTemplate.getDataSource();
+		Connection connection = dataSource.getConnection();
 		connection.close();
 	}
 
@@ -53,8 +54,7 @@ public class TestDbMaker {
 	}
 
 	private void verifyTableExists(String table) {
-		DataSource dataSource = dbMaker.createDatabase();
-		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		JdbcTemplate jdbcTemplate = dbMaker.createDatabase();
 		SqlRowSet sqlRowSet = jdbcTemplate.queryForRowSet("select count(*) from " + table);
 		assertTrue(sqlRowSet.first());
 		assertEquals(0, sqlRowSet.getInt(1));
