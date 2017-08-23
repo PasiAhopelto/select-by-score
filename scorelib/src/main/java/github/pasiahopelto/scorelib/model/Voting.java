@@ -50,9 +50,17 @@ public class Voting implements Serializable {
 		this.id = id;
 	}
 
+	public Scoring getScoring() {
+		return scoring;
+	}
+
+	public void setScoring(Scoring scoring) {
+		this.scoring = scoring;
+	}
+
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().append(name).append(description).append(options).append(scoring).append(id).toHashCode();
+		return new HashCodeBuilder().append(name).append(description).append(options).append(getScoring()).append(id).toHashCode();
 	}
 
 	@Override
@@ -60,7 +68,7 @@ public class Voting implements Serializable {
 		boolean result = false;
 		if(obj instanceof Voting) {
 			Voting other = (Voting) obj;
-			result = new EqualsBuilder().append(other.description, description).append(other.name, name).append(other.options, options).append(other.scoring, scoring).append(other.id, id).isEquals();
+			result = new EqualsBuilder().append(other.description, description).append(other.name, name).append(other.options, options).append(other.getScoring(), getScoring()).append(other.id, id).isEquals();
 		}
 		return result;
 	}

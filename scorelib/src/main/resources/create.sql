@@ -16,8 +16,8 @@ create table voting (
 	id integer,
 	name varchar(64) unique not null,
 	description varchar(256) not null,
-	primary key (id),
-	scoring enum ('exact', 'distance') not null
+	scoring enum ('exact', 'distance') not null,
+	primary key (id)
 );
 
 create table voting_option (
