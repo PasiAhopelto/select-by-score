@@ -7,6 +7,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import com.google.common.collect.Lists;
 
 import github.pasiahopelto.scorelib.model.Voting;
+import github.pasiahopelto.scorelib.model.VotingOption;
 
 import static org.junit.Assert.*;
 
@@ -75,8 +76,8 @@ public class TestVotingParser {
 	public void addsOptionToVoting() throws ParseException {
 		parser.parseEntity(votingLine);
 		parser.parseEntity(optionLine);
-		List<String> options = parser.getVotings().get(0).getOptions();
+		List<VotingOption> options = parser.getVotings().get(0).getOptions();
 		assertEquals(1, options.size());
-		assertEquals(OPTION, options.get(0));
+		assertEquals(OPTION, options.get(0).getName());
 	}
 }

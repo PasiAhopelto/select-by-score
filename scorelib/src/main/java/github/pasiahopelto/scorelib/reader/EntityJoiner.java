@@ -10,6 +10,7 @@ import github.pasiahopelto.scorelib.model.Election;
 import github.pasiahopelto.scorelib.model.Party;
 import github.pasiahopelto.scorelib.model.Vote;
 import github.pasiahopelto.scorelib.model.Voting;
+import github.pasiahopelto.scorelib.model.VotingOption;
 
 public class EntityJoiner {
 
@@ -87,6 +88,15 @@ public class EntityJoiner {
 		int votingId = 1;
 		for(Voting voting : votings) {
 			voting.setId(votingId++);
+			generateOptionIds(voting.getId(), voting.getOptions());
+		}
+	}
+
+	private void generateOptionIds(Integer votingId, List<VotingOption> options) {
+		int position = 1;
+		for(VotingOption option : options) {
+			option.setPosition(position++);
+			option.setVotingId(votingId);
 		}
 	}
 

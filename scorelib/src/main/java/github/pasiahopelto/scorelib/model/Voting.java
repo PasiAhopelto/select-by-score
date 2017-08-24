@@ -16,7 +16,7 @@ public class Voting implements Serializable {
 	private String name;
 	private String description;
 	private Scoring scoring;
-	private List<String> options;
+	private List<VotingOption> options;
 
 	public String getName() {
 		return name;
@@ -34,11 +34,11 @@ public class Voting implements Serializable {
 		this.description = description;
 	}
 
-	public List<String> getOptions() {
+	public List<VotingOption> getOptions() {
 		return options;
 	}
 
-	public void setOptions(List<String> options) {
+	public void setOptions(List<VotingOption> options) {
 		this.options = options;
 	}
 

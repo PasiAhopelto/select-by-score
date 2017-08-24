@@ -14,6 +14,7 @@ import github.pasiahopelto.scorelib.model.Election;
 import github.pasiahopelto.scorelib.model.Party;
 import github.pasiahopelto.scorelib.model.Vote;
 import github.pasiahopelto.scorelib.model.Voting;
+import github.pasiahopelto.scorelib.model.VotingOption;
 import github.pasiahopelto.scorelib.reader.EntityJoiner.IntegrityException;
 
 import static org.junit.Assert.*;
@@ -21,6 +22,7 @@ import static org.junit.Assert.*;
 @RunWith(MockitoJUnitRunner.class)
 public class TestEntityJoiner {
 
+	private static final String OPTION_NAME = "option name";
 	private static final String VOTING_NAME = "voting name";
 	private static final String CANDIDATE_NAME = "candidate name";
 	private static final String UNKNOWN_NAME = "unknown";
@@ -56,6 +58,20 @@ public class TestEntityJoiner {
 		specifyHasValidEntries();
 		joiner.populateWithIds(parties, votes, votings);
 		assertEquals(Integer.valueOf(1), votings.get(0).getId());
+	}
+
+	@Test
+	public void populatesVotingOptionWithVotingId() throws IntegrityException {
+		specifyHasValidEntries();
+		joiner.populateWithIds(parties, votes, votings);
+		assertEquals(votings.get(0).getId(), votings.get(0).getOptions().get(0).getVotingId());
+	}
+
+	@Test
+	public void populatesVotingOptionWithPositionStartingFromOne() throws IntegrityException {
+		specifyHasValidEntries();
+		joiner.populateWithIds(parties, votes, votings);
+		assertEquals(Integer.valueOf(1), votings.get(0).getOptions().get(0).getPosition());
 	}
 
 	@Test
@@ -141,6 +157,9 @@ public class TestEntityJoiner {
 		votes.get(0).setVotingName(VOTING_NAME);
 		Voting voting = new Voting();
 		voting.setName(VOTING_NAME);
+		VotingOption votingOption = new VotingOption();
+		votingOption.setName(OPTION_NAME);
+		voting.setOptions(Lists.newArrayList(votingOption));
 		votings.add(voting);
 	}
 

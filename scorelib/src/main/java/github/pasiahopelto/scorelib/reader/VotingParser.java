@@ -6,6 +6,7 @@ import java.util.List;
 import com.google.common.collect.Lists;
 
 import github.pasiahopelto.scorelib.model.Voting;
+import github.pasiahopelto.scorelib.model.VotingOption;
 
 public class VotingParser implements LineVisitor {
 
@@ -39,10 +40,17 @@ public class VotingParser implements LineVisitor {
 		}
 		Voting currentVoting = votings.get(votings.size() - 1);
 		if(currentVoting.getOptions() == null) {
-			currentVoting.setOptions(new ArrayList<String>());
+			currentVoting.setOptions(new ArrayList<VotingOption>());
 		}
 		String option = parsedLine.getValues().get(0);
-		currentVoting.getOptions().add(option);
+		currentVoting.getOptions().add(makeOption(option));
+	}
+
+	private VotingOption makeOption(String name) {
+		VotingOption votingOption = new VotingOption();
+		votingOption.setVotingId(null);
+		votingOption.setName(name);
+		return votingOption;
 	}
 
 	public List<Voting> getVotings() {
