@@ -30,6 +30,7 @@ public class TestEntityJoiner {
 	private final List<Party> parties = Lists.newArrayList();
 	private final List<Vote> votes = Lists.newArrayList();
 	private final List<Voting> votings = Lists.newArrayList();
+	private final List<VotingOption> votingOptions = Lists.newArrayList();
 
 	private EntityJoiner joiner = new EntityJoiner();
 
@@ -89,6 +90,13 @@ public class TestEntityJoiner {
 		assertEquals(votings.get(0), votes.get(0).getVoting());
 	}
 
+	@Test
+	public void setsVotingOptionOfVote() throws IntegrityException {
+		specifyHasValidEntries();
+		joiner.populateWithIds(parties, votes, votings);
+		assertEquals(votingOptions.get(0), votes.get(0).getVotingOption());
+	}
+	
 	@Test(expected=IntegrityException.class)
 	public void throwsExceptionIfVotingNameIsRepeated() throws IntegrityException {
 		specifyHasValidEntries();
@@ -157,8 +165,10 @@ public class TestEntityJoiner {
 		votes.get(0).setVotingName(VOTING_NAME);
 		Voting voting = new Voting();
 		voting.setName(VOTING_NAME);
+		votes.get(0).setOptionName(OPTION_NAME);
 		VotingOption votingOption = new VotingOption();
 		votingOption.setName(OPTION_NAME);
+		votingOptions.add(votingOption);
 		voting.setOptions(Lists.newArrayList(votingOption));
 		votings.add(voting);
 	}

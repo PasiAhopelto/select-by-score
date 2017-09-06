@@ -25,7 +25,7 @@ public class EntityJoiner {
 	public Election populateWithIds(List<Party> parties, List<Vote> votes, List<Voting> votings) throws IntegrityException {
 		generatePartyIds(parties);
 		generateVotingIds(votings);
-		populateWithVotings(votes, votings);
+		populateWithVotingsAndOptions(votes, votings);
 		populateWithCandidates(votes, parties);
 		return makeElection(parties, votes, votings);
 	}
@@ -43,15 +43,35 @@ public class EntityJoiner {
 		}
 	}
 
-	private void populateWithVotings(List<Vote> votes, List<Voting> votings) throws IntegrityException {
+	private void populateWithVotingsAndOptions(List<Vote> votes, List<Voting> votings) throws IntegrityException {
+		Map<Integer, Map<String, VotingOption>> votingOptionsByVotingIdAndOptionName = Maps.newHashMap();
 		Map<String, Voting> votingsByName = Maps.newHashMap();
 		for(Voting voting : votings) {
 			assertNotDuplicate(votingsByName, voting.getName(), "voting");
 			votingsByName.put(voting.getName(), voting);
+			votingOptionsByVotingIdAndOptionName.put(voting.getId(), collectVotingOptions(voting));
 		}
 		for(Vote vote : votes) {
-			vote.setVoting(getAndAssertVoting(votingsByName, vote));
+			Voting voting = getAndAssertVoting(votingsByName, vote);
+			vote.setVoting(voting);
+			vote.setVotingOption(getAndAssertVotingOption(votingOptionsByVotingIdAndOptionName.get(voting.getId()), vote));
 		}
+	}
+
+	private VotingOption getAndAssertVotingOption(Map<String, VotingOption> map, Vote vote) throws IntegrityException {
+		VotingOption votingOption = map.get(vote.getOptionName());
+		if(votingOption == null) {
+			throw new IntegrityException("vote", "unknown votingOptionName " + vote.getOptionName());
+		}
+		return votingOption;
+	}
+
+	private Map<String, VotingOption> collectVotingOptions(Voting voting) {
+		Map<String, VotingOption> votingOptionsByName = Maps.newHashMap();
+		for(VotingOption votingOption : voting.getOptions()) {
+			votingOptionsByName.put(votingOption.getName(), votingOption);
+		}
+		return votingOptionsByName;
 	}
 
 	private Candidate getAndAssertCandidate(Map<String, Candidate> candidatesByName, Vote vote) throws IntegrityException {
