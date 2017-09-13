@@ -38,11 +38,6 @@ public class TestVote {
 	}
 
 	private void addFactories(FactoryCollection factoryCollection) {
-		factoryCollection.addFactory(Candidate.class, new Factory<Candidate>() {
-			public Candidate create() {
-				return new Candidate();
-			}
-		});
 		factoryCollection.addFactory(Voting.class, new Factory<Voting>() {
 			public Voting create() {
 				return new Voting();

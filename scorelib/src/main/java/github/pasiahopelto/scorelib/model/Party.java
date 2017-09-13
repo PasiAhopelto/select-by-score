@@ -1,7 +1,6 @@
 package github.pasiahopelto.scorelib.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -12,7 +11,6 @@ public class Party implements Serializable {
 
 	private Integer id;
 	private String name;
-	private List<Candidate> candidates;
 	
 	public Integer getId() {
 		return id;
@@ -30,26 +28,18 @@ public class Party implements Serializable {
 		this.name = name;
 	}
 	
-	public List<Candidate> getCandidates() {
-		return candidates;
-	}
-
-	public void setCandidates(List<Candidate> candidates) {
-		this.candidates = candidates;
-	}
-
 	@Override
 	public boolean equals(Object obj) {
 		boolean result = false;
 		if(obj instanceof Party) {
 			Party other = (Party) obj;
-			result = new EqualsBuilder().append(other.id, id).append(other.name, name).append(other.candidates, candidates).isEquals();
+			result = new EqualsBuilder().append(other.id, id).append(other.name, name).isEquals();
 		}
 		return result;
 	}
 	
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().append(id).append(name).append(candidates).toHashCode();
+		return new HashCodeBuilder().append(id).append(name).toHashCode();
 	}
 }

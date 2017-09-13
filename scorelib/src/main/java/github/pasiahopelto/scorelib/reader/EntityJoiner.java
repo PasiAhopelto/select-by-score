@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.google.common.collect.Maps;
 
-import github.pasiahopelto.scorelib.model.Candidate;
 import github.pasiahopelto.scorelib.model.Election;
 import github.pasiahopelto.scorelib.model.Party;
 import github.pasiahopelto.scorelib.model.Vote;
@@ -26,21 +25,7 @@ public class EntityJoiner {
 		generatePartyIds(parties);
 		generateVotingIds(votings);
 		populateWithVotingsAndOptions(votes, votings);
-		populateWithCandidates(votes, parties);
 		return makeElection(parties, votes, votings);
-	}
-
-	private void populateWithCandidates(List<Vote> votes, List<Party> parties) throws IntegrityException {
-		Map<String, Candidate> candidatesByName = Maps.newHashMap();
-		for(Party party : parties) {
-			for(Candidate candidate : party.getCandidates()) {
-				assertNotDuplicate(candidatesByName, candidate.getName(), "candidate");
-				candidatesByName.put(candidate.getName(), candidate);
-			}
-		}
-		for(Vote vote : votes) {
-			vote.setCandidate(getAndAssertCandidate(candidatesByName, vote));
-		}
 	}
 
 	private void populateWithVotingsAndOptions(List<Vote> votes, List<Voting> votings) throws IntegrityException {
@@ -72,14 +57,6 @@ public class EntityJoiner {
 			votingOptionsByName.put(votingOption.getName(), votingOption);
 		}
 		return votingOptionsByName;
-	}
-
-	private Candidate getAndAssertCandidate(Map<String, Candidate> candidatesByName, Vote vote) throws IntegrityException {
-		Candidate candidate = candidatesByName.get(vote.getCandidateName());
-		if(candidate == null) {
-			throw new IntegrityException("vote", "unknown candidateName " + vote.getCandidateName());
-		}
-		return candidate;
 	}
 
 	private Voting getAndAssertVoting(Map<String, Voting> votingsByName, Vote vote) throws IntegrityException {
@@ -122,12 +99,8 @@ public class EntityJoiner {
 
 	private void generatePartyIds(List<Party> parties) {
 		int partyId = 1;
-		int candidateId = 1;
 		for(Party party : parties) {
 			party.setId(partyId++);
-			for(Candidate candidate : party.getCandidates()) {
-				candidate.setId(candidateId++);
-			}
 		}
 	}
 }

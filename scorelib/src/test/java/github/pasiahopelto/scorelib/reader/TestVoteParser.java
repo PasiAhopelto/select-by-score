@@ -20,7 +20,7 @@ public class TestVoteParser {
 	{
 		nonVote.setType("party");
 		vote.setType("vote");
-		vote.setValues(Lists.newArrayList("voting", "candidate", "option"));
+		vote.setValues(Lists.newArrayList("voting", "option"));
 	}
 	
 	private VoteParser parser = new VoteParser();
@@ -37,7 +37,7 @@ public class TestVoteParser {
 	}
 
 	@Test(expected=ParseException.class)
-	public void throwsExceptionIfNotThreeValues() throws ParseException {
+	public void throwsExceptionIfNotTwoValues() throws ParseException {
 		vote.getValues().add("");
 		parser.parseEntity(vote);
 	}
@@ -48,7 +48,6 @@ public class TestVoteParser {
 		List<Vote> votes = parser.getVotes();
 		assertEquals(1, votes.size());
 		assertEquals("voting", votes.get(0).getVotingName());
-		assertEquals("candidate", votes.get(0).getCandidateName());
 		assertEquals("option", votes.get(0).getOptionName());
 	}
 }

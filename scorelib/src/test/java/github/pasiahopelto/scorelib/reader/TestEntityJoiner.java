@@ -1,6 +1,5 @@
 package github.pasiahopelto.scorelib.reader;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
@@ -9,7 +8,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.google.common.collect.Lists;
 
-import github.pasiahopelto.scorelib.model.Candidate;
 import github.pasiahopelto.scorelib.model.Election;
 import github.pasiahopelto.scorelib.model.Party;
 import github.pasiahopelto.scorelib.model.Vote;
@@ -24,7 +22,6 @@ public class TestEntityJoiner {
 
 	private static final String OPTION_NAME = "option name";
 	private static final String VOTING_NAME = "voting name";
-	private static final String CANDIDATE_NAME = "candidate name";
 	private static final String UNKNOWN_NAME = "unknown";
 
 	private final List<Party> parties = Lists.newArrayList();
@@ -49,7 +46,6 @@ public class TestEntityJoiner {
 	@Test
 	public void populatesCandidateWithId() throws IntegrityException {
 		specifyHasParty();
-		specifyPartyHasCandidate();
 		joiner.populateWithIds(parties, votes, votings);
 		assertEquals(Integer.valueOf(1), parties.get(0).getId());
 	}
@@ -105,56 +101,19 @@ public class TestEntityJoiner {
 	}
 	
 	@Test(expected=IntegrityException.class)
-	public void throwsExceptionIfCandidateNameIsRepeated() throws IntegrityException {
-		specifyHasValidEntries();
-		specifyHasCandidate();
-		joiner.populateWithIds(parties, votes, votings);
-	}
-
-	@Test(expected=IntegrityException.class)
-	public void throwsExceptionIfCandidateNameIsUnknown() throws IntegrityException {
-		specifyHasVoteWithUnknownCandidateName();
-		joiner.populateWithIds(parties, votes, votings);
-	}
-
-	@Test(expected=IntegrityException.class)
 	public void throwsExceptionIfVotingNameIsUnknown() throws IntegrityException {
 		specifyHasVoteWithUnknownVotingName();
 		joiner.populateWithIds(parties, votes, votings);
 	}
 	
-	@Test
-	public void setsCandidateOfVote() throws IntegrityException {
-		specifyHasValidEntries();
-		joiner.populateWithIds(parties, votes, votings);
-		assertEquals(parties.get(0).getCandidates().get(0), votes.get(0).getCandidate());
-	}
-
 	private void specifyHasValidEntries() {
 		specifyHasVote();
 		specifyHasVoting();
-		specifyHasCandidate();
 	}
 
 	private void specifyHasVoteWithUnknownVotingName() {
 		specifyHasVote();
-		specifyHasCandidate();
 		votes.get(0).setVotingName(UNKNOWN_NAME);
-	}
-
-	private void specifyHasVoteWithUnknownCandidateName() {
-		specifyHasVote();
-		specifyHasVoting();
-		votes.get(0).setCandidateName(UNKNOWN_NAME);
-	}
-
-	private void specifyHasCandidate() {
-		votes.get(0).setCandidateName(CANDIDATE_NAME);
-		Candidate candidate = new Candidate();
-		candidate.setName(CANDIDATE_NAME);
-		Party party = new Party();
-		party.setCandidates(Lists.newArrayList(candidate));
-		parties.add(party);
 	}
 
 	private void specifyHasVote() {
@@ -173,13 +132,8 @@ public class TestEntityJoiner {
 		votings.add(voting);
 	}
 
-	private void specifyPartyHasCandidate() {
-		parties.get(0).getCandidates().add(new Candidate());
-	}
-
 	private void specifyHasParty() {
 		Party party = new Party();
-		party.setCandidates(new ArrayList<Candidate>());
 		parties.add(party);
 	}
 }

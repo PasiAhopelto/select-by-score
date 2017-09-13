@@ -6,7 +6,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.google.common.collect.Lists;
 
-import github.pasiahopelto.scorelib.model.Candidate;
 import github.pasiahopelto.scorelib.model.Party;
 
 import static org.junit.Assert.*;
@@ -57,35 +56,11 @@ public class TestPartyParser {
 		parser.parseEntity(partyLine);
 	}
 
-	@Test(expected=ParseException.class)
-	public void throwsExceptionIfCandidateWithoutName() throws ParseException {
-		specifyCandidateNameIsMissing();
-		parsePartyWithCandidate();
-	}
-
 	@Test
 	public void parsesParty() throws ParseException {
 		parser.parseEntity(partyLine);
 		List<Party> parties = parser.getParties();
 		verifyFoundParty(parties);
-	}
-
-	@Test(expected=ParseException.class)
-	public void throwsExceptionIfCandidateWithoutParty() throws ParseException {
-		parser.parseEntity(candidateLine);
-	}
-
-	@Test
-	public void addsCandidateToParty() throws ParseException {
-		parsePartyWithCandidate();
-		verifyPartyHasCandidate();
-	}
-
-	private void verifyPartyHasCandidate() {
-		Party party = parser.getParties().get(0);
-		List<Candidate> candidates = party.getCandidates();
-		assertEquals(1, candidates.size());
-		assertEquals(CANDIDATE_NAME, candidates.get(0).getName());
 	}
 
 	private void verifyFoundParty(List<Party> parties) {
@@ -95,14 +70,5 @@ public class TestPartyParser {
 
 	private void specifyPartyNameIsMissing() {
 		partyLine.getValues().clear();
-	}
-	
-	private void specifyCandidateNameIsMissing() {
-		candidateLine.getValues().clear();
-	}
-
-	private void parsePartyWithCandidate() throws ParseException {
-		parser.parseEntity(partyLine);
-		parser.parseEntity(candidateLine);
 	}
 }

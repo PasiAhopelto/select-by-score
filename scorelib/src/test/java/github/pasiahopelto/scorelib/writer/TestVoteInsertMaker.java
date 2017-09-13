@@ -12,7 +12,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 
-import github.pasiahopelto.scorelib.model.Candidate;
 import github.pasiahopelto.scorelib.model.Vote;
 import github.pasiahopelto.scorelib.model.Voting;
 import github.pasiahopelto.scorelib.model.VotingOption;
@@ -24,9 +23,8 @@ import static org.junit.Assert.*;
 @RunWith(MockitoJUnitRunner.class)
 public class TestVoteInsertMaker {
 
-	private static final String INSERT_SQL = "insert into vote (voting_id, candidate_id, option_position) values (?, ?, ?)";
+	private static final String INSERT_SQL = "insert into vote (voting_id, option_position) values (?, ?)";
 	private static final Integer VOTING_ID = 2;
-	private static final Integer CANDIDATE_ID = 3;
 	private static final Integer OPTION_POSITION = 4;
 
 	@Mock
@@ -34,9 +32,6 @@ public class TestVoteInsertMaker {
 	
 	@Mock
 	private Connection connection;
-
-	@Mock
-	private Candidate candidate;
 
 	@Mock
 	private VotingOption votingOption;
@@ -52,11 +47,9 @@ public class TestVoteInsertMaker {
 	
 	@Before
 	public void before() {
-		doReturn(candidate).when(vote).getCandidate();
 		doReturn(voting).when(vote).getVoting();
 		doReturn(votingOption).when(vote).getVotingOption();
 		doReturn(VOTING_ID).when(voting).getId();
-		doReturn(CANDIDATE_ID).when(candidate).getId();
 		doReturn(OPTION_POSITION).when(votingOption).getPosition();
 	}
 	
@@ -77,8 +70,7 @@ public class TestVoteInsertMaker {
 
 	private void verifySetVariables() throws SQLException {
 		verify(preparedStatement).setInt(1, VOTING_ID);
-		verify(preparedStatement).setInt(2, CANDIDATE_ID);
-		verify(preparedStatement).setInt(3, OPTION_POSITION);
+		verify(preparedStatement).setInt(2, OPTION_POSITION);
 	}
 
 	private void specifyPreparesStatement() throws SQLException {

@@ -13,7 +13,6 @@ public class Election implements Serializable {
 	private List<Party> parties;
 	private List<Voting> votings;
 	private List<Vote> votes;
-	private List<Candidate> independentCandidates;
 	
 	public List<Party> getParties() {
 		return parties;
@@ -39,17 +38,9 @@ public class Election implements Serializable {
 		this.votes = votes;
 	}
 	
-	public List<Candidate> getIndependentCandidates() {
-		return independentCandidates;
-	}
-	
-	public void setIndependentCandidates(List<Candidate> independentCandidates) {
-		this.independentCandidates = independentCandidates;
-	}
-	
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().append(independentCandidates).append(parties).append(votes).append(votings).toHashCode();
+		return new HashCodeBuilder().append(parties).append(votes).append(votings).toHashCode();
 	}
 	
 	@Override
@@ -57,7 +48,7 @@ public class Election implements Serializable {
 		boolean result = false;
 		if(obj instanceof Election) {
 			Election other = (Election) obj;
-			result = new EqualsBuilder().append(other.independentCandidates, independentCandidates).append(other.parties, parties).append(other.votes, votes).append(other.votings, votings).isEquals();
+			result = new EqualsBuilder().append(other.parties, parties).append(other.votes, votes).append(other.votings, votings).isEquals();
 		}
 		return result;
 	}

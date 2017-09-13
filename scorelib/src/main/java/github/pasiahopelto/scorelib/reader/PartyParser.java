@@ -5,13 +5,11 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-import github.pasiahopelto.scorelib.model.Candidate;
 import github.pasiahopelto.scorelib.model.Party;
 
 public class PartyParser implements LineVisitor {
 
 	private static final String PARTY = "party";
-	private static final String CANDIDATE = "candidate";
 
 	private ArrayList<Party> parties = Lists.newArrayList();
 
@@ -24,23 +22,6 @@ public class PartyParser implements LineVisitor {
 			assertHasOneValue(parsedLine);
 			addParty(parsedLine);
 		}
-		else if(CANDIDATE.equals(parsedLine.getType())) {
-			assertHasOneValue(parsedLine);
-			addCandidateToParty(parsedLine);
-		}
-	}
-
-	private void addCandidateToParty(ParsedLine parsedLine) throws ParseException {
-		if(parties.isEmpty()) {
-			throw new ParseException("stray candidate without party " + parsedLine.getValues());
-		}
-		Party currentParty = parties.get(parties.size() - 1);
-		if(currentParty.getCandidates() == null) {
-			currentParty.setCandidates(new ArrayList<Candidate>());
-		}
-		Candidate candidate = new Candidate();
-		candidate.setName(getName(parsedLine));
-		currentParty.getCandidates().add(candidate);
 	}
 
 	private void addParty(ParsedLine parsedLine) {

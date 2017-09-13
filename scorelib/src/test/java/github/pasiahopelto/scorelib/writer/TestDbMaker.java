@@ -34,11 +34,6 @@ public class TestDbMaker {
 	}
 
 	@Test
-	public void createsCandidateTable() throws SQLException {
-		verifyTableExists("candidate");
-	}
-
-	@Test
 	public void createsVotingTable() throws SQLException {
 		verifyTableExists("voting");
 	}
