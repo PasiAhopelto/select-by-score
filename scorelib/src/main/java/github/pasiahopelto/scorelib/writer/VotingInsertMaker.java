@@ -11,7 +11,7 @@ import github.pasiahopelto.scorelib.model.Voting;
 
 public class VotingInsertMaker implements InsertStatementMaker {
 
-	private static final String INSERT_SQL = "insert into voting (id, name, description, scoring) values (?, ?, ?, ?)";
+	private static final String INSERT_SQL = "insert into voting (id, name, description) values (?, ?, ?)";
 
 	public PreparedStatementCreator createStatementCreator(final Serializable entity) {
 		return new PreparedStatementCreator() {
@@ -21,7 +21,6 @@ public class VotingInsertMaker implements InsertStatementMaker {
 				prepareStatement.setInt(1, voting.getId());
 				prepareStatement.setString(2, voting.getName());
 				prepareStatement.setString(3, voting.getDescription());
-				prepareStatement.setString(4, voting.getScoring().toString());
 				return prepareStatement;
 			}
 		};

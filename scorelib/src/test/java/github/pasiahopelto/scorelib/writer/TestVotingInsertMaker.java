@@ -13,7 +13,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 
 import github.pasiahopelto.scorelib.model.Voting;
-import github.pasiahopelto.scorelib.model.Voting.Scoring;
 
 import static org.mockito.Mockito.*;
 
@@ -22,11 +21,10 @@ import static org.junit.Assert.*;
 @RunWith(MockitoJUnitRunner.class)
 public class TestVotingInsertMaker {
 
-	private static final String INSERT_SQL = "insert into voting (id, name, description, scoring) values (?, ?, ?, ?)";
+	private static final String INSERT_SQL = "insert into voting (id, name, description) values (?, ?, ?)";
 	private static final Integer ID = 2;
 	private static final String NAME = "name";
 	private static final String DESCRIPTION = "description";
-	private static final Scoring SCORING = Voting.Scoring.EXACT;
 
 	@Mock
 	private PreparedStatement preparedStatement;
@@ -45,7 +43,6 @@ public class TestVotingInsertMaker {
 		doReturn(ID).when(voting).getId();
 		doReturn(NAME).when(voting).getName();
 		doReturn(DESCRIPTION).when(voting).getDescription();
-		doReturn(SCORING).when(voting).getScoring();
 	}
 	
 	@Test(expected=SQLException.class)
@@ -67,7 +64,6 @@ public class TestVotingInsertMaker {
 		verify(preparedStatement).setInt(1, ID);
 		verify(preparedStatement).setString(2, NAME);
 		verify(preparedStatement).setString(3, DESCRIPTION);
-		verify(preparedStatement).setString(4, SCORING.toString());
 	}
 
 	private void specifyPreparesStatement() throws SQLException {
