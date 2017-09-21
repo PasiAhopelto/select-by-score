@@ -5,12 +5,12 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-import github.pasiahopelto.scorelib.model.Vote;
+import github.pasiahopelto.scorelib.model.Votes;
 
 public class VoteParser implements LineVisitor {
 
 	private static final String TYPE = "vote";
-	private ArrayList<Vote> votes = Lists.newArrayList();
+	private ArrayList<Votes> votes = Lists.newArrayList();
 
 	public void parseEntity(ParsedLine parsedLine) throws ParseException {
 		if(TYPE.equals(parsedLine.getType())) {
@@ -19,8 +19,8 @@ public class VoteParser implements LineVisitor {
 		}
 	}
 
-	private Vote makeVote(ParsedLine parsedLine) {
-		Vote vote = new Vote();
+	private Votes makeVote(ParsedLine parsedLine) {
+		Votes vote = new Votes();
 		vote.setVotingName(parsedLine.getValues().get(0));
 		vote.setOptionName(parsedLine.getValues().get(1));
 		return vote;
@@ -32,7 +32,7 @@ public class VoteParser implements LineVisitor {
 		}
 	}
 
-	public List<Vote> getVotes() {
+	public List<Votes> getVotes() {
 		return votes;
 	}
 }

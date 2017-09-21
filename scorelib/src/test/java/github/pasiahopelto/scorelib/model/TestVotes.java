@@ -14,27 +14,27 @@ import static org.junit.Assert.*;
 import java.io.Serializable;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TestVote {
+public class TestVotes {
 
 	@Test
 	public void testBean() {
 		BeanTester beanTester = new BeanTester();
 		addFactories(beanTester.getFactoryCollection());
-		beanTester.testBean(Vote.class);
+		beanTester.testBean(Votes.class);
 	}
 
 	@Test
 	public void testEqualsMethod() {
 		EqualsMethodTester equalsMethodTester = new EqualsMethodTester();
 		addFactories(equalsMethodTester.getFactoryCollection());
-		equalsMethodTester.testEqualsMethod(Vote.class);
+		equalsMethodTester.testEqualsMethod(Votes.class);
 	}
 
 	@Test
 	public void testHashCodeMethod() {
 		HashCodeMethodTester hashCodeMethodTester = new HashCodeMethodTester();
 		addFactories(hashCodeMethodTester.getFactoryCollection());
-		hashCodeMethodTester.testHashCodeMethod(Vote.class);
+		hashCodeMethodTester.testHashCodeMethod(Votes.class);
 	}
 
 	private void addFactories(FactoryCollection factoryCollection) {
@@ -47,6 +47,6 @@ public class TestVote {
 
 	@Test
 	public void isSerializable() {
-		assertTrue(new Vote() instanceof Serializable);
+		assertTrue(new Votes() instanceof Serializable);
 	}
 }

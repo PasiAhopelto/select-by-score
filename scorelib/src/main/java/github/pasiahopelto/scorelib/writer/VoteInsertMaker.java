@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.PreparedStatementCreator;
 
-import github.pasiahopelto.scorelib.model.Vote;
+import github.pasiahopelto.scorelib.model.Votes;
 
 public class VoteInsertMaker implements InsertStatementMaker {
 
@@ -16,7 +16,7 @@ public class VoteInsertMaker implements InsertStatementMaker {
 	public PreparedStatementCreator createStatementCreator(final Serializable entity) {
 		return new PreparedStatementCreator() {
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-				Vote party = (Vote) entity;
+				Votes party = (Votes) entity;
 				PreparedStatement prepareStatement = connection.prepareStatement(INSERT_SQL);
 				prepareStatement.setInt(1, party.getVoting().getId());
 				prepareStatement.setInt(2, party.getVotingOption().getPosition());

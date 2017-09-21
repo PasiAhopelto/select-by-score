@@ -12,7 +12,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 
-import github.pasiahopelto.scorelib.model.Vote;
+import github.pasiahopelto.scorelib.model.Votes;
 import github.pasiahopelto.scorelib.model.Voting;
 import github.pasiahopelto.scorelib.model.VotingOption;
 
@@ -40,7 +40,7 @@ public class TestVoteInsertMaker {
 	private Voting voting;
 
 	@Mock
-	private Vote vote;
+	private Votes vote;
 	
 	@InjectMocks
 	private VoteInsertMaker maker;

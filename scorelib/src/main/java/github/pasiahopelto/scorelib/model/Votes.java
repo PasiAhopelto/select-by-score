@@ -5,7 +5,7 @@ import java.io.Serializable;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-public class Vote implements Serializable {
+public class Votes implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -55,8 +55,8 @@ public class Vote implements Serializable {
 	@Override
 	public boolean equals(Object obj) {
 		boolean result = false;
-		if(obj instanceof Vote) {
-			Vote other = (Vote) obj;
+		if(obj instanceof Votes) {
+			Votes other = (Votes) obj;
 			result = new EqualsBuilder().append(other.votingName, votingName).append(other.optionName, optionName).append(other.voting, voting).append(other.votingOption, votingOption).isEquals();
 		}
 		return result;
