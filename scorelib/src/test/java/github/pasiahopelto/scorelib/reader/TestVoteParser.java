@@ -47,7 +47,5 @@ public class TestVoteParser {
 		parser.parseEntity(vote);
 		List<Votes> votes = parser.getVotes();
 		assertEquals(1, votes.size());
-		assertEquals("voting", votes.get(0).getVotingName());
-		assertEquals("option", votes.get(0).getOptionName());
 	}
 }

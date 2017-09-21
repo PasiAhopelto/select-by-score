@@ -18,7 +18,6 @@ public class PartyInsertMaker implements InsertStatementMaker {
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
 				Party party = (Party) entity;
 				PreparedStatement prepareStatement = connection.prepareStatement(INSERT_SQL);
-				prepareStatement.setInt(1, party.getId());
 				prepareStatement.setString(2, party.getName());
 				return prepareStatement;
 			}

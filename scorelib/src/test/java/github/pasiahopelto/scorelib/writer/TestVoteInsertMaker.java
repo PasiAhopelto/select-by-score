@@ -47,9 +47,7 @@ public class TestVoteInsertMaker {
 	
 	@Before
 	public void before() {
-		doReturn(voting).when(vote).getVoting();
 		doReturn(votingOption).when(vote).getVotingOption();
-		doReturn(VOTING_ID).when(voting).getId();
 		doReturn(OPTION_POSITION).when(votingOption).getPosition();
 	}
 	

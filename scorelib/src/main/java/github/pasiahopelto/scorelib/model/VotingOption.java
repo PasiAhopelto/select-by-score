@@ -9,18 +9,9 @@ public class VotingOption implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Integer votingId;
 	private String name;
 	private Integer position;
 	
-	public Integer getVotingId() {
-		return votingId;
-	}
-	
-	public void setVotingId(Integer votingId) {
-		this.votingId = votingId;
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -39,7 +30,7 @@ public class VotingOption implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().append(votingId).append(name).append(position).toHashCode();
+		return new HashCodeBuilder().append(name).append(position).toHashCode();
 	}
 	
 	@Override
@@ -47,7 +38,7 @@ public class VotingOption implements Serializable {
 		boolean result = false;
 		if(obj instanceof VotingOption) {
 			VotingOption other = (VotingOption) obj;
-			result = new EqualsBuilder().append(other.votingId, votingId).append(other.name, name).append(other.position, position).isEquals();
+			result = new EqualsBuilder().append(other.name, name).append(other.position, position).isEquals();
 		}
 		return result;
 	}

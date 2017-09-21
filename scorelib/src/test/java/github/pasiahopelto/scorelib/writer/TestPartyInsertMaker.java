@@ -39,7 +39,6 @@ public class TestPartyInsertMaker {
 	
 	@Before
 	public void before() {
-		doReturn(ID).when(party).getId();
 		doReturn(NAME).when(party).getName();
 	}
 	

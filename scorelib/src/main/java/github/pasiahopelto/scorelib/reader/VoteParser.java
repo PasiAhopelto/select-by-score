@@ -21,8 +21,6 @@ public class VoteParser implements LineVisitor {
 
 	private Votes makeVote(ParsedLine parsedLine) {
 		Votes vote = new Votes();
-		vote.setVotingName(parsedLine.getValues().get(0));
-		vote.setOptionName(parsedLine.getValues().get(1));
 		return vote;
 	}
 

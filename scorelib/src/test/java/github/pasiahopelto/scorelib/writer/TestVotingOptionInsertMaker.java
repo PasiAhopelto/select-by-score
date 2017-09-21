@@ -40,7 +40,6 @@ public class TestVotingOptionInsertMaker {
 	
 	@Before
 	public void before() {
-		doReturn(VOTING_ID).when(votingOption).getVotingId();
 		doReturn(NAME).when(votingOption).getName();
 		doReturn(POSITION).when(votingOption).getPosition();
 	}

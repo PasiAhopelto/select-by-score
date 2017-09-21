@@ -40,7 +40,6 @@ public class TestVotingInsertMaker {
 	
 	@Before
 	public void before() {
-		doReturn(ID).when(voting).getId();
 		doReturn(NAME).when(voting).getName();
 		doReturn(DESCRIPTION).when(voting).getDescription();
 	}

@@ -9,36 +9,9 @@ public class Votes implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	private String votingName;
-	private String optionName;
-	
-	private Voting voting;
 	private VotingOption votingOption;
+	private Party party;
 	
-	public String getVotingName() {
-		return votingName;
-	}
-	
-	public void setVotingName(String votingName) {
-		this.votingName = votingName;
-	}
-
-	public String getOptionName() {
-		return optionName;
-	}
-
-	public void setOptionName(String optionName) {
-		this.optionName = optionName;
-	}
-
-	public Voting getVoting() {
-		return voting;
-	}
-
-	public void setVoting(Voting voting) {
-		this.voting = voting;
-	}
-
 	public VotingOption getVotingOption() {
 		return votingOption;
 	}
@@ -47,9 +20,17 @@ public class Votes implements Serializable {
 		this.votingOption = votingOption;
 	}
 
+	public Party getParty() {
+		return party;
+	}
+
+	public void setParty(Party party) {
+		this.party = party;
+	}
+
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().append(votingName).append(optionName).append(voting).append(votingOption).toHashCode();
+		return new HashCodeBuilder().append(votingOption).append(party).toHashCode();
 	}
 
 	@Override
@@ -57,7 +38,7 @@ public class Votes implements Serializable {
 		boolean result = false;
 		if(obj instanceof Votes) {
 			Votes other = (Votes) obj;
-			result = new EqualsBuilder().append(other.votingName, votingName).append(other.optionName, optionName).append(other.voting, voting).append(other.votingOption, votingOption).isEquals();
+			result = new EqualsBuilder().append(other.votingOption, votingOption).append(other.party, party).isEquals();
 		}
 		return result;
 	}

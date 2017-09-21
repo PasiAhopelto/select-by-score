@@ -48,7 +48,6 @@ public class VotingParser implements LineVisitor {
 
 	private VotingOption makeOption(String name) {
 		VotingOption votingOption = new VotingOption();
-		votingOption.setVotingId(null);
 		votingOption.setName(name);
 		return votingOption;
 	}

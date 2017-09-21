@@ -18,7 +18,6 @@ public class VoteInsertMaker implements InsertStatementMaker {
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
 				Votes party = (Votes) entity;
 				PreparedStatement prepareStatement = connection.prepareStatement(INSERT_SQL);
-				prepareStatement.setInt(1, party.getVoting().getId());
 				prepareStatement.setInt(2, party.getVotingOption().getPosition());
 				return prepareStatement;
 			}
