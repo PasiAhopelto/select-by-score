@@ -7,7 +7,7 @@ import com.google.common.collect.Lists;
 
 import github.pasiahopelto.scorelib.model.Votes;
 
-public class VoteParser {
+public class VotesParser {
 
 	private static final String TYPE = "vote";
 	private ArrayList<Votes> votes = Lists.newArrayList();

@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 import java.util.List;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TestVoteParser {
+public class TestVotesParser {
 
 	private final ParsedLine nonVote = new ParsedLine();
 	private final ParsedLine vote = new ParsedLine();
@@ -23,7 +23,7 @@ public class TestVoteParser {
 		vote.setValues(Lists.newArrayList("voting", "option"));
 	}
 	
-	private VoteParser parser = new VoteParser();
+	private VotesParser parser = new VotesParser();
 	
 	@Test
 	public void votesIsEmptyAfterInit() {
