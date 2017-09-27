@@ -6,34 +6,36 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.google.common.collect.Lists;
 
+import github.pasiahopelto.scorelib.model.Party;
 import github.pasiahopelto.scorelib.model.Votes;
+import github.pasiahopelto.scorelib.model.VotingOption;
 
 import static org.junit.Assert.*;
-
-import java.util.List;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TestVotesParser {
 
+	private static final String VOTE_COUNT = "4";
+	private static final String OPTION = "yes";
+	private static final String PARTY = "party";
+
 	private final ParsedLine nonVote = new ParsedLine();
 	private final ParsedLine vote = new ParsedLine();
+	private final Party party = new Party();
+	private final VotingOption votingOption = new VotingOption();
 	{
-		nonVote.setType("party");
-		vote.setType("vote");
-		vote.setValues(Lists.newArrayList("voting", "option"));
+		nonVote.setType("voting");
+		vote.setType("votes");
+		vote.setValues(Lists.newArrayList(PARTY, OPTION, VOTE_COUNT));
+		party.setName(PARTY);
+		votingOption.setName(OPTION);
 	}
 	
 	private VotesParser parser = new VotesParser();
 	
 	@Test
-	public void votesIsEmptyAfterInit() {
-		assertTrue(parser.getVotes().isEmpty());
-	}
-
-	@Test
 	public void ignoresNonVoteType() throws ParseException {
-		parser.parseEntity(nonVote);
-		assertTrue(parser.getVotes().isEmpty());
+		assertNull(parser.parseEntity(nonVote));
 	}
 
 	@Test(expected=ParseException.class)
@@ -43,9 +45,10 @@ public class TestVotesParser {
 	}
 	
 	@Test
-	public void addsVote() throws ParseException {
-		parser.parseEntity(vote);
-		List<Votes> votes = parser.getVotes();
-		assertEquals(1, votes.size());
+	public void parsesVotes() throws ParseException {
+		Votes votes = parser.parseEntity(vote);
+		assertEquals(party, votes.getParty());
+		assertEquals(votingOption, votes.getVotingOption());
+		assertEquals(Integer.valueOf(VOTE_COUNT), votes.getVotes());
 	}
 }
