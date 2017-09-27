@@ -7,7 +7,7 @@ import com.google.common.collect.Lists;
 import github.pasiahopelto.scorelib.model.Voting;
 import github.pasiahopelto.scorelib.model.VotingOption;
 
-public class VotingParser implements LineVisitor {
+public class VotingParser {
 
 	public Voting parseEntity(ParsedLine parsedLine) throws ParseException {
 		Voting result = null;
