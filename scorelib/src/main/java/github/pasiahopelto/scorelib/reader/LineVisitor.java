@@ -1,6 +1,8 @@
 package github.pasiahopelto.scorelib.reader;
 
+import github.pasiahopelto.scorelib.model.Voting;
+
 public interface LineVisitor {
 
-	void parseEntity(ParsedLine parsedLine) throws ParseException;
+	Voting parseEntity(ParsedLine parsedLine) throws ParseException;
 }
