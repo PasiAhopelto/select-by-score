@@ -1,25 +1,21 @@
 package github.pasiahopelto.scorelib.writer;
 
-import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import org.springframework.jdbc.core.PreparedStatementCreator;
 
-import github.pasiahopelto.scorelib.model.Party;
+public class PartyInsertMaker {
 
-public class PartyInsertMaker implements InsertStatementMaker {
+	private static final String INSERT_SQL = "insert into party (name) values (?)";
 
-	private static final String INSERT_SQL = "insert into party (id, name) values (?, ?)";
-
-	public PreparedStatementCreator createStatementCreator(final Serializable entity) {
+	public PreparedStatementCreator createStatementCreator(final String partyName) {
 		return new PreparedStatementCreator() {
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-				Party party = (Party) entity;
-				PreparedStatement prepareStatement = connection.prepareStatement(INSERT_SQL);
-				prepareStatement.setString(2, party.getName());
-				return prepareStatement;
+				PreparedStatement preparedStatement = connection.prepareStatement(INSERT_SQL);
+				preparedStatement.setString(1, partyName);
+				return preparedStatement;
 			}
 		};
 	}

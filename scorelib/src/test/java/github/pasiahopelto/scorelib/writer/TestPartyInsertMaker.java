@@ -4,15 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.jdbc.core.PreparedStatementCreator;
-
-import github.pasiahopelto.scorelib.model.Party;
 
 import static org.mockito.Mockito.*;
 
@@ -21,8 +18,7 @@ import static org.junit.Assert.*;
 @RunWith(MockitoJUnitRunner.class)
 public class TestPartyInsertMaker {
 
-	private static final String INSERT_SQL = "insert into party (id, name) values (?, ?)";
-	private static final Integer ID = 2;
+	private static final String INSERT_SQL = "insert into party (name) values (?)";
 	private static final String NAME = "name";
 
 	@Mock
@@ -31,35 +27,26 @@ public class TestPartyInsertMaker {
 	@Mock
 	private Connection connection;
 
-	@Mock
-	private Party party;
-	
 	@InjectMocks
 	private PartyInsertMaker maker;
-	
-	@Before
-	public void before() {
-		doReturn(NAME).when(party).getName();
-	}
 	
 	@Test(expected=SQLException.class)
 	public void doesNotHideSqlException() throws SQLException {
 		specifyPrepareStatementFails();
-		PreparedStatementCreator statementCreator = maker.createStatementCreator(party);
+		PreparedStatementCreator statementCreator = maker.createStatementCreator(NAME);
 		statementCreator.createPreparedStatement(connection);
 	}
 
 	@Test
-	public void preparesStatementAndSetsVariables() throws SQLException {
+	public void preparesStatementAndSetsVariable() throws SQLException {
 		specifyPreparesStatement();
-		PreparedStatementCreator statementCreator = maker.createStatementCreator(party);
+		PreparedStatementCreator statementCreator = maker.createStatementCreator(NAME);
 		assertSame(preparedStatement, statementCreator.createPreparedStatement(connection));
-		verifySetVariables();
+		verifySetVariable();
 	}
 
-	private void verifySetVariables() throws SQLException {
-		verify(preparedStatement).setInt(1, ID);
-		verify(preparedStatement).setString(2, NAME);
+	private void verifySetVariable() throws SQLException {
+		verify(preparedStatement).setString(1, NAME);
 	}
 
 	private void specifyPreparesStatement() throws SQLException {

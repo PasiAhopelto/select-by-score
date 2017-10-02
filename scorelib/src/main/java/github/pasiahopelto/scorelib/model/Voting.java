@@ -12,7 +12,7 @@ public class Voting implements Serializable {
 
 	private String name;
 	private String description;
-	private List<VotingOption> options;
+	private List<Votes> votes;
 
 	public String getName() {
 		return name;
@@ -30,17 +30,17 @@ public class Voting implements Serializable {
 		this.description = description;
 	}
 
-	public List<VotingOption> getOptions() {
-		return options;
+	public List<Votes> getVotes() {
+		return votes;
 	}
 
-	public void setOptions(List<VotingOption> options) {
-		this.options = options;
+	public void setVotes(List<Votes> votes) {
+		this.votes = votes;
 	}
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().append(name).append(description).append(options).toHashCode();
+		return new HashCodeBuilder().append(name).append(votes).append(description).toHashCode();
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class Voting implements Serializable {
 		boolean result = false;
 		if(obj instanceof Voting) {
 			Voting other = (Voting) obj;
-			result = new EqualsBuilder().append(other.description, description).append(other.name, name).append(other.options, options).isEquals();
+			result = new EqualsBuilder().append(other.name, name).append(other.votes, votes).append(other.description, description).isEquals();
 		}
 		return result;
 	}

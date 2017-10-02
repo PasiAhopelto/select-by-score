@@ -1,28 +1,22 @@
 create table party (
-	id integer,
+	id integer auto_increment,
 	name varchar(64) unique not null,
 	primary key (id)
 );
 
 create table voting (
-	id integer,
+	id integer auto_increment,
 	name varchar(64) unique not null,
 	description varchar(256) not null,
 	primary key (id)
 );
 
-create table voting_option (
+create table votes (
+	id integer auto_increment,
 	voting_id integer not null,
-	name varchar(64) not null,
-	position integer not null,
-	primary key (voting_id, position),
-	foreign key (voting_id) references voting(id) on delete cascade
-);
-
-create table vote (
-	voting_id integer not null,
-	option_position integer not null,
-	primary key (voting_id, option_position),
+	party_id integer not null,
+	name charchar(10) not null,
+	unique key (voting_id, party_id, name),
 	foreign key (voting_id) references voting(id) on delete cascade,
-	foreign key (voting_id, option_position) references voting_option(voting_id, position) on delete cascade
+	foreign key (party_id) references party(party_id) on delete cascade
 );

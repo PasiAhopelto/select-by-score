@@ -9,23 +9,23 @@ public class Votes implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	private VotingOption votingOption;
-	private Party party;
+	private String vote;
+	private String party;
 	private Integer votes;
 	
-	public VotingOption getVotingOption() {
-		return votingOption;
+	public String getVote() {
+		return vote;
 	}
 
-	public void setVotingOption(VotingOption votingOption) {
-		this.votingOption = votingOption;
+	public void setVote(String vote) {
+		this.vote = vote;
 	}
 
-	public Party getParty() {
+	public String getParty() {
 		return party;
 	}
 
-	public void setParty(Party party) {
+	public void setParty(String party) {
 		this.party = party;
 	}
 
@@ -39,7 +39,7 @@ public class Votes implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().append(votingOption).append(party).append(votes).toHashCode();
+		return new HashCodeBuilder().append(vote).append(votes).toHashCode();
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class Votes implements Serializable {
 		boolean result = false;
 		if(obj instanceof Votes) {
 			Votes other = (Votes) obj;
-			result = new EqualsBuilder().append(other.votingOption, votingOption).append(other.party, party).append(other.votes, votes).isEquals();
+			result = new EqualsBuilder().append(other.vote, vote).append(other.party, party).append(other.votes, votes).isEquals();
 		}
 		return result;
 	}
