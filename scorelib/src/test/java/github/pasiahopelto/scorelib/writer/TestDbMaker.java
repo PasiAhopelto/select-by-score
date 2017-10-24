@@ -40,12 +40,7 @@ public class TestDbMaker {
 
 	@Test
 	public void createsVoteTable() throws SQLException {
-		verifyTableExists("vote");
-	}
-
-	@Test
-	public void createsVotingOptionTable() throws SQLException {
-		verifyTableExists("voting_option");
+		verifyTableExists("votes");
 	}
 
 	private void verifyTableExists(String table) {
