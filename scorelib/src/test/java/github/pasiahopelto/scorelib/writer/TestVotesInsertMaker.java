@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -11,7 +12,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 
-import github.pasiahopelto.scorelib.model.Voting;
+import github.pasiahopelto.scorelib.model.Votes;
 
 import static org.mockito.Mockito.*;
 
@@ -20,10 +21,11 @@ import static org.junit.Assert.*;
 @RunWith(MockitoJUnitRunner.class)
 public class TestVotesInsertMaker {
 
-	private static final String INSERT_SQL = "insert into vote (voting_id, party_id, name) values (?, ?, ?)";
+	private static final String INSERT_SQL = "insert into votes (voting_id, party_id, votes, vote) values (?, ?, ?, ?)";
 	private static final Integer VOTING_ID = 2;
 	private static final Integer PARTY_ID = 3;
-	private static final String NAME = "name";
+	private static final Integer VOTES = 4;
+	private static final String VOTE = "yes";
 
 	@Mock
 	private PreparedStatement preparedStatement;
@@ -32,22 +34,28 @@ public class TestVotesInsertMaker {
 	private Connection connection;
 
 	@Mock
-	private Voting voting;
+	private Votes votes;
 
 	@InjectMocks
 	private VotesInsertMaker maker;
-	
+
+	@Before
+	public void before() {
+		doReturn(VOTES).when(votes).getVotes();
+		doReturn(VOTE).when(votes).getVote();
+	}
+
 	@Test(expected=SQLException.class)
 	public void doesNotHideSqlException() throws SQLException {
 		specifyPrepareStatementFails();
-		PreparedStatementCreator statementCreator = maker.createStatementCreator(NAME, VOTING_ID, PARTY_ID);
+		PreparedStatementCreator statementCreator = maker.createStatementCreator(votes, VOTING_ID, PARTY_ID);
 		statementCreator.createPreparedStatement(connection);
 	}
 
 	@Test
 	public void preparesStatementAndSetsVariables() throws SQLException {
 		specifyPreparesStatement();
-		PreparedStatementCreator statementCreator = maker.createStatementCreator(NAME, VOTING_ID, PARTY_ID);
+		PreparedStatementCreator statementCreator = maker.createStatementCreator(votes, VOTING_ID, PARTY_ID);
 		assertSame(preparedStatement, statementCreator.createPreparedStatement(connection));
 		verifySetVariables();
 	}
@@ -55,7 +63,8 @@ public class TestVotesInsertMaker {
 	private void verifySetVariables() throws SQLException {
 		verify(preparedStatement).setInt(1, VOTING_ID);
 		verify(preparedStatement).setInt(2, PARTY_ID);
-		verify(preparedStatement).setString(3, NAME);
+		verify(preparedStatement).setInt(3, VOTES);
+		verify(preparedStatement).setString(4, VOTE);
 	}
 
 	private void specifyPreparesStatement() throws SQLException {
