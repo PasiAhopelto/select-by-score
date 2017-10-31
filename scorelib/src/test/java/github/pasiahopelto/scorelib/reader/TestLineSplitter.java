@@ -30,8 +30,8 @@ public class TestLineSplitter {
 	
 	@Test
 	public void splitsLineToTypeAndValues() throws ParseException {
-		ParsedLine parsedLine = splitter.splitLine("type|first|second");
-		assertEquals("type", parsedLine.getType());
-		assertEquals(Lists.newArrayList("first", "second"), parsedLine.getValues());
+		ParsedLine parsedLine = splitter.splitLine("votes partyName|yes|4");
+		assertEquals("votes", parsedLine.getType());
+		assertEquals(Lists.newArrayList("partyName", "yes", "4"), parsedLine.getValues());
 	}
 }

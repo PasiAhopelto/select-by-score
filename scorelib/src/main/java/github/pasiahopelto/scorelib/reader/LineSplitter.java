@@ -1,26 +1,32 @@
 package github.pasiahopelto.scorelib.reader;
 
 import java.util.Arrays;
-
-import org.apache.commons.lang3.ArrayUtils;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class LineSplitter {
 
+	private static final Pattern PATTERN = Pattern.compile("(votes|voting)\\s(.+)");
+
 	public ParsedLine splitLine(String string) throws ParseException {
+		ParsedLine result = null;
 		if(string == null) {
 			throw new ParseException("input is null");
 		}
-		String[] parts = string.split("\\|");
-		if(parts.length < 2) {
+		Matcher matcher = PATTERN.matcher(string);
+		if(matcher.matches()) {
+			result = makeResult(matcher.group(1), matcher.group(2).split("\\|"));
+		}
+		else {
 			throw new ParseException("input is missing values");
 		}
-		return makeResult(parts);
+		return result;
 	}
 
-	private ParsedLine makeResult(String[] parts) {
+	private ParsedLine makeResult(String type, String[] parts) {
 		ParsedLine result = new ParsedLine();
-		result.setType(parts[0]);
-		result.setValues(Arrays.asList(ArrayUtils.subarray(parts, 1, parts.length)));
+		result.setType(type);
+		result.setValues(Arrays.asList(parts));
 		return result;
 	}
 }

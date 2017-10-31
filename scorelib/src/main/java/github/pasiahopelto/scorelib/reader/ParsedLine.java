@@ -43,4 +43,9 @@ public class ParsedLine implements Serializable {
 		}
 		return result;
 	}
+
+	@Override
+	public String toString() {
+		return type + ": " + values;
+	}
 }
