@@ -1,9 +1,11 @@
+drop table if exists party;
 create table party (
 	id integer auto_increment,
 	name varchar(64) unique not null,
 	primary key (id)
 );
 
+drop table if exists voting;
 create table voting (
 	id integer auto_increment,
 	name varchar(64) unique not null,
@@ -11,6 +13,7 @@ create table voting (
 	primary key (id)
 );
 
+drop table if exists votes;
 create table votes (
 	id integer auto_increment,
 	voting_id integer not null,

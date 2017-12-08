@@ -21,7 +21,7 @@ public class DbMaker {
 
 	private DatabasePopulator createDatabasePopulator() {
         ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
-        databasePopulator.setContinueOnError(true);
+        databasePopulator.setContinueOnError(false);
         databasePopulator.addScript(new ClassPathResource(CREATE_SQL));
         return databasePopulator;
     }
