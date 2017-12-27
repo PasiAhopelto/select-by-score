@@ -28,4 +28,10 @@ public class TestDbConfig {
 		assertNotNull(jdbcTemplate.queryForObject("select count(*) from party", Integer.class));
 	}
 
+	@Test
+	public void populatedDatabase() {
+		assertEquals(Integer.valueOf(3), jdbcTemplate.queryForObject("select count(*) from party", Integer.class));
+		assertEquals(Integer.valueOf(2), jdbcTemplate.queryForObject("select count(*) from voting", Integer.class));
+	}
+
 }

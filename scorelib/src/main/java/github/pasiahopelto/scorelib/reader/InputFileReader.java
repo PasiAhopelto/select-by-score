@@ -14,6 +14,10 @@ public class InputFileReader {
 
 	private LineSplitter lineSplitter;
 
+	public InputFileReader(LineSplitter lineSplitter) {
+		this.lineSplitter = lineSplitter;
+	}
+
 	public List<Voting> read(String filename) throws IOException, ParseException {
 		List<Voting> result = Lists.newArrayList();
 		try (BufferedReader reader = new BufferedReader(new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream(filename))))) {

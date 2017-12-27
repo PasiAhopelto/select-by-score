@@ -9,6 +9,10 @@ public class VotesInserter {
 
 	private VotesInsertMaker statementMaker;
 
+	public VotesInserter(VotesInsertMaker votesInsertMaker) {
+		statementMaker = votesInsertMaker;
+	}
+
 	public void insert(JdbcTemplate jdbcTemplate, Votes votes, Integer votingId, Integer partyId) {
 		PreparedStatementCreator statementCreator = statementMaker.createStatementCreator(votes, votingId, partyId);
 		jdbcTemplate.update(statementCreator);

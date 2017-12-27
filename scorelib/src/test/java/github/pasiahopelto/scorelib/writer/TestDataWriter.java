@@ -41,15 +41,13 @@ public class TestDataWriter {
 	private PartyInsertMaker partyInsertMaker = new PartyInsertMaker();
 
 	@Spy
-	@InjectMocks
-	private PartyInserter partyInserter = new PartyInserter();
+	private PartyInserter partyInserter = new PartyInserter(partyInsertMaker);
 
 	@Spy
 	private VotesInsertMaker votesInsertMaker = new VotesInsertMaker();
 
 	@Spy
-	@InjectMocks
-	private VotesInserter votesInserter = new VotesInserter();
+	private VotesInserter votesInserter = new VotesInserter(votesInsertMaker);
 
 	@Spy
 	private VotingInsertMaker votingInsertMaker = new VotingInsertMaker();
@@ -58,8 +56,7 @@ public class TestDataWriter {
 	private DbMaker dbMaker = new DbMaker();
 
 	@Spy
-	@InjectMocks
-	private VotingInserter votingInserter = new VotingInserter();
+	private VotingInserter votingInserter = new VotingInserter(votingInsertMaker);
 
 	@InjectMocks
 	private DataWriter dataWriter;

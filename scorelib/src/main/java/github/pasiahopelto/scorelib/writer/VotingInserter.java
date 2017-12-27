@@ -11,6 +11,10 @@ public class VotingInserter {
 
 	private VotingInsertMaker statementMaker;
 
+	public VotingInserter(VotingInsertMaker votingInsertMaker) {
+		statementMaker = votingInsertMaker;
+	}
+
 	public Integer insert(JdbcTemplate jdbcTemplate, Voting voting) {
 		PreparedStatementCreator statementCreator = statementMaker.createStatementCreator(voting.getName(), voting.getDescription());
 		KeyHolder keyHolder = new GeneratedKeyHolder();

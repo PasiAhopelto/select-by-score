@@ -20,7 +20,14 @@ public class DataWriter {
 	private VotingInserter votingInserter;
 	private VotesInserter votesInserter;
 
-	public void write(List<Voting> votings) {
+	public DataWriter(DbMaker dbMaker, PartyInserter partyInserter, VotingInserter votingInserter, VotesInserter votesInserter) {
+		this.dbMaker = dbMaker;
+		this.partyInserter = partyInserter;
+		this.votingInserter = votingInserter;
+		this.votesInserter = votesInserter;
+	}
+
+	public JdbcTemplate write(List<Voting> votings) {
 		JdbcTemplate jdbcTemplate = dbMaker.createDatabase();
 		Map<String, Integer> partyIds = insertParties(votings, jdbcTemplate);
 		for(Voting voting : votings) {
@@ -30,6 +37,7 @@ public class DataWriter {
 				votesInserter.insert(jdbcTemplate, votes, votingId, partyId);
 			}
 		}
+		return jdbcTemplate;
 	}
 
 	private Map<String, Integer> insertParties(List<Voting> votings, JdbcTemplate jdbcTemplate) {

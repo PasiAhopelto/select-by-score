@@ -9,6 +9,10 @@ public class PartyInserter {
 
 	private PartyInsertMaker statementMaker;
 
+	public PartyInserter(PartyInsertMaker partyInsertMaker) {
+		statementMaker = partyInsertMaker;
+	}
+
 	public Integer insert(JdbcTemplate jdbcTemplate, String partyName) {
 		PreparedStatementCreator statementCreator = statementMaker.createStatementCreator(partyName);
 		KeyHolder keyHolder = new GeneratedKeyHolder();
