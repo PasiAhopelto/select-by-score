@@ -16,5 +16,6 @@
 
 	<modules>
 		<module>scorelib</module>
+		<module>acceptance-tests</module>
 	</modules>
 </project>
