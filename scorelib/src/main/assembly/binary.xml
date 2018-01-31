@@ -17,5 +17,12 @@
 			</includes>
 			<outputDirectory>lib</outputDirectory>
 		</fileSet>
+		<fileSet>
+			<directory>.</directory>
+			<excludes>
+				<exclude>*/**</exclude>
+			</excludes>
+			<outputDirectory>var</outputDirectory>
+		</fileSet>
 	</fileSets>
 </assembly>
