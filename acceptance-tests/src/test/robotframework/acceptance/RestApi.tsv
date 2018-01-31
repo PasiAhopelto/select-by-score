@@ -1,10 +1,10 @@
 *** Settings ***
 Documentation	Test scorelib's REST API
-Library	OperatingSystem
+Library	Process
 
 *** Test Cases ***
 I can start and stop the api process
-	${result} =	Run and return RC	target/scorelib-1.0-SNAPSHOT/bin/scorelib.sh start
-	Should Be Equal As Integers	${result}	0
-	${result} =	Run and return RC	target/scorelib-1.0-SNAPSHOT/bin/scorelib.sh stop
-	Should Be Equal As Integers	${result}	0
+	${result} =	Run process	target/scorelib-1.0-SNAPSHOT/bin/scorelib.sh	start
+	Should Be Equal As Integers	${result.rc}	0
+	${result} =	Run process	target/scorelib-1.0-SNAPSHOT/bin/scorelib.sh	stop
+	Should Be Equal As Integers	${result.rc}	0
