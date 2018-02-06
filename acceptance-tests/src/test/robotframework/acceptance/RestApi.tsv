@@ -6,5 +6,11 @@ Library	Process
 I can start and stop the api process
 	${result} =	Run process	target/scorelib-1.0-SNAPSHOT/bin/scorelib.sh	start
 	Should Be Equal As Integers	${result.rc}	0
+	Assert service is up
 	${result} =	Run process	target/scorelib-1.0-SNAPSHOT/bin/scorelib.sh	stop
 	Should Be Equal As Integers	${result.rc}	0
+
+*** Keywords ***
+Assert service is up
+	${result} =	Run process	curl	http://localhost:8080/health
+	Should be equal	${result.stdout}	{"status":"UP"}
