@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import github.pasiahopelto.scorelib.fetcher.VotingsLister;
 import github.pasiahopelto.scorelib.model.Voting;
 import github.pasiahopelto.scorelib.reader.InputFileReader;
 import github.pasiahopelto.scorelib.reader.LineSplitter;
@@ -24,6 +25,12 @@ import github.pasiahopelto.scorelib.writer.VotingInserter;
 
 @Configuration
 public class DbConfig {
+
+	@Singleton
+	@Bean
+	public VotingsLister votingsLister() {
+		return new VotingsLister();
+	}
 
 	@Singleton
 	@Bean

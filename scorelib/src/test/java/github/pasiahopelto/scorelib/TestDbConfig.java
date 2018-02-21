@@ -10,15 +10,19 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import github.pasiahopelto.scorelib.fetcher.VotingsLister;
+
 @RunWith(MockitoJUnitRunner.class)
 public class TestDbConfig {
 
 	private JdbcTemplate jdbcTemplate;
+	private VotingsLister votingsLister;
 
 	@Before
 	public void before() {
 		ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(DbConfig.class);
 		jdbcTemplate = context.getBean(JdbcTemplate.class);
+		votingsLister = context.getBean(VotingsLister.class);
 		context.close();
 	}
 
@@ -34,4 +38,8 @@ public class TestDbConfig {
 		assertEquals(Integer.valueOf(2), jdbcTemplate.queryForObject("select count(*) from voting", Integer.class));
 	}
 
+	@Test
+	public void definesVotingsListerBean() {
+		assertEquals(2, votingsLister.listVotings(jdbcTemplate).size());
+	}
 }
