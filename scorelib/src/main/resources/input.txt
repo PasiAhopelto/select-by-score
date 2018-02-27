@@ -1,0 +1,7 @@
+voting voting name one|description one
+votes party one|yes|4
+votes party one|no|2
+voting voting name two|description two
+votes party one|yes|1
+votes party two|no|1
+votes party three|yes|5

@@ -1,12 +1,13 @@
-package github.pasiahopelto.scorelib.run;
+package github.pasiahopelto.scorelib;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages={"github.pasiahopelto.scorelib"})
 public class Main {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Main.class, args);
 	}
+
 }

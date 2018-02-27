@@ -3,9 +3,14 @@ package github.pasiahopelto.scorelib.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.Entity;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Entity
 public class Voting implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -30,6 +35,7 @@ public class Voting implements Serializable {
 		this.description = description;
 	}
 
+	@JsonIgnore
 	public List<Votes> getVotes() {
 		return votes;
 	}

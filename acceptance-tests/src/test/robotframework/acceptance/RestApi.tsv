@@ -10,6 +10,12 @@ I can start and stop the api process
 	${result} =	Run process	target/scorelib-1.0-SNAPSHOT/bin/scorelib.sh	stop
 	Should Be Equal As Integers	${result.rc}	0
 
+I can list votings
+	${result} =	Run process	target/scorelib-1.0-SNAPSHOT/bin/scorelib.sh	start
+	${result} =	Run process	curl	http://localhost:8080/votings
+	Should be equal	${result.stdout}	[{"name":"voting name one","description":"description one"},{"name":"voting name two","description":"description two"}]
+	${result} =	Run process	target/scorelib-1.0-SNAPSHOT/bin/scorelib.sh	stop
+
 *** Keywords ***
 Assert service is up
 	${result} =	Run process	curl	http://localhost:8080/health

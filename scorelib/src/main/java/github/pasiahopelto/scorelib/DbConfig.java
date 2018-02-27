@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.inject.Singleton;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -14,6 +15,7 @@ import github.pasiahopelto.scorelib.model.Voting;
 import github.pasiahopelto.scorelib.reader.InputFileReader;
 import github.pasiahopelto.scorelib.reader.LineSplitter;
 import github.pasiahopelto.scorelib.reader.ParseException;
+import github.pasiahopelto.scorelib.rest.VotingsRest;
 import github.pasiahopelto.scorelib.writer.DataWriter;
 import github.pasiahopelto.scorelib.writer.DbMaker;
 import github.pasiahopelto.scorelib.writer.PartyInsertMaker;
@@ -25,6 +27,13 @@ import github.pasiahopelto.scorelib.writer.VotingInserter;
 
 @Configuration
 public class DbConfig {
+
+	@Autowired
+	@Singleton
+	@Bean
+	public VotingsRest votingsRest(JdbcTemplate jdbcTemplate, VotingsLister votingsLister) {
+		return new VotingsRest(jdbcTemplate, votingsLister);
+	}
 
 	@Singleton
 	@Bean

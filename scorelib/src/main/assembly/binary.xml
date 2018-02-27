@@ -18,6 +18,13 @@
 			<outputDirectory>lib</outputDirectory>
 		</fileSet>
 		<fileSet>
+			<directory>target/classes</directory>
+			<includes>
+				<include>input.txt</include>
+			</includes>
+			<outputDirectory>data</outputDirectory>
+		</fileSet>
+		<fileSet>
 			<directory>.</directory>
 			<excludes>
 				<exclude>*/**</exclude>
