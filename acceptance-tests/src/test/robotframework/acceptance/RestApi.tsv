@@ -18,5 +18,5 @@ I can list votings
 
 *** Keywords ***
 Assert service is up
-	${result} =	Run process	curl	http://localhost:8080/health
+	${result} =	Run process	curl	http://localhost:8080/actuator/health
 	Should be equal	${result.stdout}	{"status":"UP"}
